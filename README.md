@@ -2,4 +2,4 @@
 
 Site oficial da comunidade Família Sant's.
 
-🔗 Acesse: https://visionary-cupcake-657cb9.netlify.app
+🔗 Acesse o nosso site: https://familia-sants.netlify.app
