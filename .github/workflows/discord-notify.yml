@@ -24,15 +24,15 @@ jobs:
           curl -H "Content-Type: application/json" \
           -X POST \
           -d "{
-            \"username\": \"Sant's Updates\",
-            \"avatar_url\": \"https://i.imgur.com/4M34hi2.png\",
+            \"username\": \"Família Sant's Site updates\",
+            \"avatar_url\": \"https://c.tenor.com/8BQPyRAxz80AAAAC/tenor.gif\",
             \"embeds\": [{
-              \"title\": \"🚀 Nova Atualização no Site!\",
+              \"title\": \"<a:am_sinosbrs:1485710106430537780> Nova Atualização no Site!\",
               \"description\": \"O site da **Família Sant's** acaba de receber uma atualização.\",
               \"color\": 12745742,
               \"fields\": [
                 {
-                  \"name\": \"📝 O que mudou\",
+                  \"name\": \"<:Sv_infoMessage:1485361062109778082> O que mudou?\",
                   \"value\": \"\`\`\`$COMMIT_MSG\`\`\`\",
                   \"inline\": false
                 },
@@ -53,11 +53,11 @@ jobs:
                 }
               ],
               \"image\": {
-                \"url\": \"https://i.imgur.com/4M34hi2.png\"
+                \"url\": \"https://c.tenor.com/cJQat0B5W5EAAAAC/tenor.gif\"
               },
               \"footer\": {
                 \"text\": \"Família Sant's • Official Platform\",
-                \"icon_url\": \"https://i.imgur.com/4M34hi2.png\"
+                \"icon_url\": \"https://c.tenor.com/8BQPyRAxz80AAAAC/tenor.gif\"
               },
               \"thumbnail\": {
                 \"url\": \"https://cdn.discordapp.com/emojis/1234567890.png\"
@@ -65,4 +65,3 @@ jobs:
             }]
           }" \
           $WEBHOOK_URL
-          
