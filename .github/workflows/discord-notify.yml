@@ -1,0 +1,68 @@
+name: Discord Notify
+
+on:
+  push:
+    branches: [ master, main ]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Envia notificação pro Discord
+        env:
+          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%s)
+          COMMIT_HASH=$(git log -1 --pretty=%h)
+          COMMIT_AUTHOR=$(git log -1 --pretty=%an)
+          COMMIT_DATE=$(date '+%d/%m/%Y às %H:%M')
+          REPO_URL="https://github.com/${{ github.repository }}"
+          COMMIT_URL="$REPO_URL/commit/$(git log -1 --pretty=%H)"
+
+          curl -H "Content-Type: application/json" \
+          -X POST \
+          -d "{
+            \"username\": \"Sant's Updates\",
+            \"avatar_url\": \"https://i.imgur.com/4M34hi2.png\",
+            \"embeds\": [{
+              \"title\": \"🚀 Nova Atualização no Site!\",
+              \"description\": \"O site da **Família Sant's** acaba de receber uma atualização.\",
+              \"color\": 12745742,
+              \"fields\": [
+                {
+                  \"name\": \"📝 O que mudou\",
+                  \"value\": \"\`\`\`$COMMIT_MSG\`\`\`\",
+                  \"inline\": false
+                },
+                {
+                  \"name\": \"👤 Autor\",
+                  \"value\": \"$COMMIT_AUTHOR\",
+                  \"inline\": true
+                },
+                {
+                  \"name\": \"🔖 Commit\",
+                  \"value\": \"[\`$COMMIT_HASH\`]($COMMIT_URL)\",
+                  \"inline\": true
+                },
+                {
+                  \"name\": \"📅 Data\",
+                  \"value\": \"$COMMIT_DATE\",
+                  \"inline\": true
+                }
+              ],
+              \"image\": {
+                \"url\": \"https://i.imgur.com/4M34hi2.png\"
+              },
+              \"footer\": {
+                \"text\": \"Família Sant's • Official Platform\",
+                \"icon_url\": \"https://i.imgur.com/4M34hi2.png\"
+              },
+              \"thumbnail\": {
+                \"url\": \"https://cdn.discordapp.com/emojis/1234567890.png\"
+              }
+            }]
+          }" \
+          $WEBHOOK_URL
+          
