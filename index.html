@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Família Sant's | Official Platform</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- VARIÁVEIS DE DESIGN --- */
+        :root {
+            --bg-deep: #050507;
+            --bg-surface: #0a0a0f;
+            --bg-surface-card: #101016;
+            --gold-premium: #c5a059;
+            --gold-glow: rgba(197, 160, 89, 0.15);
+            --cream-bright: #f5f4f0;
+            --cream-muted: #8b8a87;
+            --crimson-luxury: #3a0808;
+            --crimson-bright: #731313;
+            --font-sans: 'Montserrat', sans-serif;
+            --font-display: 'Syne', sans-serif;
+            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            background-color: var(--bg-deep);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            color: var(--cream-bright);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Textura Cinematográfica de Fundo */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 9999;
+        }
+
+        .container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 6%; }
+
+        .btn-outline {
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 1.1rem 2.5rem; border: 1px solid var(--gold-premium); background: transparent;
+            color: var(--gold-premium); font-family: var(--font-sans); font-weight: 700; font-size: 0.85rem;
+            letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: var(--transition-smooth);
+            text-decoration: none; position: relative; overflow: hidden;
+        }
+
+        .btn-outline::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--gold-premium); transform: scaleX(0); transform-origin: right;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); z-index: -1;
+        }
+
+        .btn-outline svg { fill: var(--gold-premium); transition: var(--transition-smooth); flex-shrink: 0; }
+        .btn-outline:hover { color: var(--bg-deep); box-shadow: 0 0 30px var(--gold-glow); }
+        .btn-outline:hover::before { transform: scaleX(1); transform-origin: left; }
+        .btn-outline:hover svg { fill: var(--bg-deep); }
+
+        .btn-solid { background: var(--gold-premium); color: var(--bg-deep); border: 1px solid var(--gold-premium); }
+        .btn-solid::before { background: var(--cream-bright); }
+        .btn-solid:hover { color: var(--bg-deep); border-color: var(--cream-bright); }
+
+        .section-badge {
+            font-size: 0.8rem; font-weight: 700; letter-spacing: 4px; color: var(--gold-premium);
+            text-transform: uppercase; margin-bottom: 1.5rem; display: inline-flex; align-items: center; gap: 10px;
+        }
+        .section-badge::before { content: '◆'; font-size: 0.6rem; }
+
+        .section-title-large {
+            font-family: var(--font-display); font-size: 3.5rem; font-weight: 800; text-transform: uppercase;
+            line-height: 1.1; letter-spacing: -1px; margin-bottom: 2.5rem;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            position: fixed; top: 0; left: 0; width: 100%; padding: 2rem 6%;
+            display: flex; justify-content: space-between; align-items: center; z-index: 1000; transition: var(--transition-smooth);
+        }
+        .navbar.scrolled { padding: 1.2rem 6%; background: rgba(5, 5, 7, 0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+
+        .nav-brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; letter-spacing: 2px; color: var(--cream-bright); }
+        .nav-brand svg { width: 30px; height: 30px; flex-shrink: 0; }
+
+        .nav-menu { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-link { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--cream-muted); text-decoration: none; transition: var(--transition-smooth); position: relative; padding: 0.5rem 0; }
+        .nav-link::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background-color: var(--gold-premium); transition: var(--transition-smooth); }
+        .nav-link:hover, .nav-link.active { color: var(--gold-premium); }
+        .nav-link.active::after { width: 100%; }
+
+        .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 1001; }
+        .menu-toggle span { width: 26px; height: 2px; background-color: var(--cream-bright); transition: var(--transition-smooth); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative; min-height: 100vh; display: flex; align-items: center; padding-top: 140px; padding-bottom: 80px;
+            overflow: hidden; background: radial-gradient(circle at 85% 50%, rgba(197, 160, 89, 0.08) 0%, var(--bg-deep) 60%);
+        }
+        .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; align-items: center; width: 100%; gap: 4rem; }
+        .hero-title { font-family: var(--font-display); font-size: 5.5rem; font-weight: 900; line-height: 1.05; text-transform: uppercase; color: var(--cream-bright); margin-bottom: 2rem; letter-spacing: -2px; }
+        .hero-title span { color: var(--gold-premium); }
+        .hero-desc { font-size: 1.15rem; color: var(--cream-muted); max-width: 550px; margin-bottom: 3.5rem; line-height: 1.8; }
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .hero-art-container { width: 100%; display: flex; justify-content: center; position: relative; }
+        .hero-artwork { width: 100%; max-width: 480px; height: auto; filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)); animation: floatArtwork 6s ease-in-out infinite; }
+        @keyframes floatArtwork { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* --- TICKER ANIMADO --- */
+        .scrolling-ticker {
+            background-color: var(--gold-premium); padding: 1rem 0; overflow: hidden; display: flex; white-space: nowrap;
+        }
+        .ticker-text {
+            font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: var(--bg-deep);
+            text-transform: uppercase; letter-spacing: 3px; display: inline-block; padding-right: 50px; animation: ticker 25s linear infinite;
+        }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        /* --- MANIFESTO --- */
+        .manifesto-section { padding: 12rem 0; background-color: var(--bg-surface); text-align: center; }
+        .manifesto-content { max-width: 900px; margin: 0 auto; }
+        .manifesto-text { font-size: 1.8rem; font-family: var(--font-display); line-height: 1.5; color: var(--cream-bright); font-weight: 700; }
+        .manifesto-text span { color: var(--gold-premium); }
+
+        /* --- STATS BAR --- */
+        .stats-bar { background-color: var(--bg-deep); border-top: 1px solid rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.02); padding: 6rem 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+        .stat-item h3 { font-family: var(--font-display); font-size: 4rem; font-weight: 800; color: var(--gold-premium); line-height: 1; margin-bottom: 0.5rem; }
+        .stat-item p { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--cream-muted); font-weight: 600; }
+
+        /* --- ESTRUTURA E DIFERENÇA DE ACESSO --- */
+        .comparison-section { padding: 10rem 0; background-color: var(--bg-surface); }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 4rem; }
+        .comp-card { background: var(--bg-surface-card); padding: 4rem; border: 1px solid rgba(255,255,255,0.03); }
+        .comp-card.highlight { border-color: var(--gold-premium); background: linear-gradient(180deg, rgba(30,20,10,0.5) 0%, var(--bg-surface-card) 100%); }
+        .comp-card h3 { font-size: 2rem; font-family: var(--font-display); margin-bottom: 1.5rem; color: var(--cream-bright); }
+        .comp-card.highlight h3 { color: var(--gold-premium); }
+        .comp-card p { color: var(--cream-muted); line-height: 1.8; margin-bottom: 2rem; font-size: 1.05rem; }
+        .comp-list { list-style: none; }
+        .comp-list li { margin-bottom: 1rem; padding-left: 2rem; position: relative; color: var(--cream-bright); }
+        .comp-list li::before { content: '→'; position: absolute; left: 0; color: var(--gold-premium); font-weight: bold; }
+
+        /* --- MÉTODOS DE INGRESSO REAL --- */
+        .pipeline-section { padding: 10rem 0; background-color: var(--bg-deep); border-top: 1px solid rgba(255,255,255,0.02); }
+        .pipeline-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; max-width: 1000px; margin: 0 auto; }
+        .pipeline-card { background-color: var(--bg-surface-card); padding: 4rem 3rem; border: 1px solid rgba(255,255,255,0.02); position: relative; transition: var(--transition-smooth); text-align: center; }
+        .pipeline-card:hover { border-color: rgba(197, 160, 89, 0.4); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .pipeline-card h3 { font-size: 1.8rem; font-family: var(--font-display); text-transform: uppercase; margin-bottom: 1.5rem; color: var(--gold-premium); }
+        .pipeline-card p { font-size: 1.05rem; color: var(--cream-muted); line-height: 1.8; margin-bottom: 2.5rem; }
+
+        /* --- SEÇÃO DE EQUIPE (DONOS REAIS) --- */
+        .section-team { padding: 10rem 0; background-color: var(--bg-surface); border-top: 1px solid rgba(255,255,255,0.02); }
+        .team-layout-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1200px; margin: 0 auto; }
+        .profile-row-card { background-color: var(--bg-deep); border: 1px solid rgba(255, 255, 255, 0.03); padding: 3rem; display: flex; align-items: center; gap: 2.5rem; position: relative; transition: var(--transition-smooth); }
+        .profile-row-card:hover { border-color: rgba(197, 160, 89, 0.2); transform: translateY(-4px); }
+        .profile-avatar-circle { width: 120px; height: 120px; border-radius: 50%; border: 2px solid var(--gold-premium); padding: 5px; background-color: var(--bg-surface); flex-shrink: 0; box-shadow: 0 0 20px rgba(197, 160, 89, 0.15); }
+        .profile-avatar-circle svg { width: 100%; height: 100%; border-radius: 50%; }
+        .profile-name { font-size: 2rem; text-transform: uppercase; font-weight: 800; font-family: var(--font-display); }
+        .profile-role { font-size: 0.85rem; font-weight: 700; color: var(--gold-premium); text-transform: uppercase; letter-spacing: 4px; margin: 0.4rem 0 1rem 0; display: block; }
+        .profile-bio { font-size: 0.95rem; color: var(--cream-muted); line-height: 1.7; }
+
+        /* --- SEÇÃO DO DESENVOLVEDOR (VOCÊ - KAEL) --- */
+        .developer-credit-section { padding: 10rem 0; background: linear-gradient(135deg, var(--bg-deep) 0%, #110e1a 100%); border-top: 1px solid rgba(197, 160, 89, 0.2); }
+        .dev-container-block { display: grid; grid-template-columns: 0.8fr 1.2fr; align-items: center; gap: 5rem; max-width: 1100px; margin: 0 auto; }
+        .dev-art svg { width: 100%; max-width: 350px; height: auto; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5)); }
+        .dev-text-box h2 { font-family: var(--font-display); font-size: 3rem; text-transform: uppercase; margin-bottom: 1.5rem; }
+        .dev-text-box h2 span { color: var(--gold-premium); }
+        .dev-text-box p { color: var(--cream-muted); font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem; }
+
+        /* --- LINHA DO TEMPO / EXTRA VISUAL --- */
+        .timeline-section { padding: 10rem 0; background-color: var(--bg-deep); }
+        .timeline-container { max-width: 1000px; margin: 0 auto; position: relative; padding-left: 3rem; border-left: 2px solid rgba(255,255,255,0.05); }
+        .timeline-item { position: relative; margin-bottom: 5rem; }
+        .timeline-item::before { content: ''; position: absolute; left: calc(-3rem - 7px); top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--gold-premium); box-shadow: 0 0 15px var(--gold-premium); }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item h4 { font-family: var(--font-display); font-size: 1.5rem; color: var(--cream-bright); margin-bottom: 0.5rem; text-transform: uppercase; }
+        .timeline-item p { color: var(--cream-muted); font-size: 1.05rem; }
+
+        /* --- FAQ --- */
+        .faq-section { padding: 10rem 0; background-color: var(--bg-surface); }
+        .faq-wrapper { max-width: 800px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid rgba(255,255,255,0.04); padding: 1.5rem 0; }
+        .faq-trigger { width: 100%; background: none; border: none; text-align: left; color: var(--cream-bright); font-family: var(--font-sans); font-size: 1.15rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; }
+        .faq-trigger span { transition: var(--transition-smooth); font-size: 1.5rem; }
+        .faq-panel { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .faq-panel p { color: var(--cream-muted); font-size: 1rem; line-height: 1.7; padding-bottom: 1.5rem; }
+        .faq-item.active .faq-trigger { color: var(--gold-premium); }
+        .faq-item.active .faq-trigger span { transform: rotate(45deg); color: var(--gold-premium); }
+        .faq-item.active .faq-panel { max-height: 300px; }
+
+        /* --- FOOTER ÉPICO --- */
+        .main-footer { background-color: var(--bg-deep); padding: 8rem 0 3rem 0; border-top: 1px solid rgba(255,255,255,0.02); }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 4rem; margin-bottom: 6rem; }
+        .footer-brand-box h3 { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 2px; margin-bottom: 1.5rem; color: var(--gold-premium); }
+        .footer-brand-box p { font-size: 0.95rem; color: var(--cream-muted); max-width: 300px; line-height: 1.7; margin-bottom: 2rem; }
+        .footer-column h4 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--cream-bright); margin-bottom: 2rem; }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 1.2rem; }
+        .footer-column ul li a { font-size: 0.95rem; color: var(--cream-muted); text-decoration: none; transition: var(--transition-smooth); }
+        .footer-column ul li a:hover { color: var(--gold-premium); padding-left: 5px; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.03); padding-top: 3rem; text-align: center; }
+        .footer-bottom p { font-size: 0.85rem; color: rgba(245,244,240,0.4); text-transform: uppercase; letter-spacing: 2px; }
+        .footer-bottom span { color: var(--gold-premium); font-weight: bold; }
+
+        /* --- ANIMATION REVEAL --- */
+        .reveal-element { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-element.is-visible { opacity: 1; transform: translateY(0); }
+
+        /* --- RESPONSIVIDADE MOBILE --- */
+        @media (max-width: 1200px) {
+            .hero-title { font-size: 4.5rem; }
+            .dev-container-block { gap: 3rem; grid-template-columns: 1fr 1.2fr; }
+        }
+
+        @media (max-width: 968px) {
+            .navbar { padding: 1.5rem 6%; }
+            .menu-toggle { display: flex; }
+            .nav-menu { position: fixed; top: 0; right: 0; width: 290px; height: 100vh; background-color: var(--bg-deep); border-left: 1px solid rgba(255,255,255,0.04); flex-direction: column; justify-content: center; padding-left: 3.5rem; gap: 2.5rem; z-index: 1000; transform: translateX(100%); }
+            .nav-menu.active { transform: translateX(0); box-shadow: -10px 0 50px rgba(0,0,0,0.8); }
+            .menu-toggle.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .menu-toggle.active span:nth-child(2) { opacity: 0; }
+            .menu-toggle.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+            
+            .hero { padding-top: 120px; text-align: center; }
+            .hero-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+            .hero-title { font-size: 3.8rem; }
+            .hero-desc { margin: 0 auto 3rem auto; }
+            .hero-buttons { justify-content: center; }
+            .hero-art-container { order: -1; }
+            
+            .stats-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+            .comparison-grid, .pipeline-grid, .team-layout-grid, .dev-container-block, .footer-grid { grid-template-columns: 1fr; }
+            .dev-art { display: flex; justify-content: center; }
+            .manifesto-text { font-size: 1.5rem; }
+        }
+
+        @media (max-width: 640px) {
+            .section-title-large { font-size: 2.5rem; }
+            .stats-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .profile-row-card { flex-direction: column; text-align: center; padding: 2.5rem 1.5rem; }
+            .comp-card { padding: 2.5rem 1.5rem; }
+            .pipeline-card { padding: 3rem 1.5rem; }
+            .manifesto-section, .comparison-section, .pipeline-section, .section-team, .developer-credit-section, .timeline-section, .faq-section { padding: 6rem 0; }
+            .btn-outline, .btn-solid { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar" id="global-navbar">
+        <div class="nav-brand">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="15" y="10" width="70" height="80" rx="6" fill="#c5a059"/>
+                <rect x="22" y="17" width="56" height="66" rx="4" fill="#0d0d12"/>
+                <path d="M50 32 L62 48 L50 64 L38 48 Z" fill="#731313"/>
+                <circle cx="50" cy="48" r="4" fill="#c5a059"/>
+            </svg>
+            FAMÍLIA SANT'S
+        </div>
+        
+        <nav>
+            <ul class="nav-menu" id="nav-menu-list">
+                <li><a href="#inicio" class="nav-link active">Início</a></li>
+                <li><a href="#estrutura" class="nav-link">O Servidor</a></li>
+                <li><a href="#ingresso" class="nav-link">Como Entrar</a></li>
+                <li><a href="#donos" class="nav-link">Os Donos</a></li>
+                <li><a href="#desenvolvedor" class="nav-link">Dev do Site</a></li>
+            </ul>
+        </nav>
+
+        <div class="menu-toggle" id="mobile-menu-trigger">
+            <span></span><span></span><span></span>
+        </div>
+    </header>
+
+    <main>
+        
+        <section class="hero" id="inicio">
+            <div class="container">
+                <div class="hero-grid">
+                    
+                    <div class="hero-content">
+                        <h1 class="hero-title">O Topo<br>Não é para<br><span>Qualquer Um.</span></h1>
+                        <p class="hero-desc">O servidor no Discord está aberto para receber a todos de forma livre. No entanto, tornar-se efetivamente um membro da Família Sant's é um direito conquistado apenas por quem vence nossos sorteios ou adquire sua vaga direta.</p>
+                        
+                        <div class="hero-buttons">
+                            <a href="#ingresso" class="btn-outline btn-solid">Adquirir Vaga VIP</a>
+                            <a href="https://discord.gg/jMsnwERaqG" target="_blank" rel="noopener noreferrer" class="btn-outline">Entrar no Discord</a>
+                        </div>
+                    </div>
+
+                    <div class="hero-art-container">
+                        <svg class="hero-artwork" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#c5a059" stop-opacity="0.25"/>
+                                    <stop offset="100%" stop-color="#050507" stop-opacity="0"/>
+                                </radialGradient>
+                            </defs>
+                            <circle cx="250" cy="250" r="220" fill="url(#glow)"/>
+                            <path d="M100 400 L400 400 L370 220 L130 220 Z" fill="#101016" stroke="#c5a059" stroke-width="3"/>
+                            <path d="M130 220 C 130 220, 250 120, 370 220" fill="#2b0404" stroke="#c5a059" stroke-width="4"/>
+                            <circle cx="250" cy="210" r="75" fill="#101016" stroke="#c5a059" stroke-width="5"/>
+                            <circle cx="250" cy="210" r="65" fill="none" stroke="#731313" stroke-width="2" stroke-dasharray="6,6"/>
+                            <path d="M200 220 Q250 190 300 220" id="textPath" fill="none"/>
+                            <text fill="#f5f4f0" font-family="'Syne'" font-size="24" font-weight="bold" letter-spacing="3" text-anchor="middle"><textPath href="#textPath" startOffset="50%">SANT'S</textPath></text>
+                        </svg>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <div class="scrolling-ticker">
+            <div class="ticker-text">
+                MUITO MAIS DE 100 MEMBROS OFICIAIS • SERVIDOR DO DISCORD LIBERADO PARA TODOS • MEMBRO DA FAMÍLIA APENAS VIA SORTEIO OU COMPRA DE VAGA • SITE DESENVOLVIDO POR KAEL •
+                MUITO MAIS DE 100 MEMBROS OFICIAIS • SERVIDOR DO DISCORD LIBERADO PARA TODOS • MEMBRO DA FAMÍLIA APENAS VIA SORTEIO OU COMPRA DE VAGA • SITE DESENVOLVIDO POR KAEL •
+            </div>
+        </div>
+
+        <section class="manifesto-section reveal-element">
+            <div class="container">
+                <div class="manifesto-content">
+                    <div class="section-badge">Diretriz Interna</div>
+                    <p class="manifesto-text">"Qualquer pessoa pode cruzar os portões do nosso servidor e interagir. Nós mantemos um ambiente aberto para a convivência global. Porém, <span>o título de membro da Família Sant's não é dado, é conquistado.</span> Ele separa os que apenas observam daqueles que realmente fazem parte da nossa história."</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-bar">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item reveal-element">
+                        <h3>+100</h3>
+                        <p>Membros Ativos</p>
+                    </div>
+                    <div class="stat-item reveal-element">
+                        <h3>2</h3>
+                        <p>Donos Oficiais</p>
+                    </div>
+                    <div class="stat-item reveal-element">
+                        <h3>100%</h3>
+                        <p>Código Autoral de Kael</p>
+                    </div>
+                    <div class="stat-item reveal-element">
+                        <h3>24/7</h3>
+                        <p>Conexão Direta</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="comparison-section" id="estrutura">
+            <div class="container">
+                <div class="reveal-element" style="text-align: center;">
+                    <div class="section-badge" style="justify-content: center;">Hierarquia Sem Segredos</div>
+                    <h2 class="section-title-large">Acesso ao Servidor vs Família</h2>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comp-card reveal-element">
+                        <h3>Visitantes do Discord</h3>
+                        <p>Todos, sem exceção, podem entrar no link do nosso servidor a qualquer momento para bater papo e usar os chats públicos.</p>
+                        <ul class="comp-list">
+                            <li>Entrada livre e imediata pelo convite</li>
+                            <li>Uso das salas abertas de texto e canais de voz</li>
+                            <li>Participação nos chats diários da comunidade</li>
+                            <li>Não possui cargo ou direitos na Família</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="comp-card highlight reveal-element">
+                        <h3>Membro da Família Sant's</h3>
+                        <p>A elite real da organização. Fazer parte da família significa ter privilégios e carregar o nome oficial da corporação.</p>
+                        <ul class="comp-list">
+                            <li>Reconhecimento oficial como Membro</li>
+                            <li>Acesso integral a salas de comando fechadas</li>
+                            <li>Destaque absoluto acima dos usuários comuns</li>
+                            <li>Ingresso estrito via Sorteio ou Compra de Vaga</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pipeline-section" id="ingresso">
+            <div class="container">
+                <div class="reveal-element" style="text-align: center; margin-bottom: 5rem;">
+                    <div class="section-badge" style="justify-content: center;">Como Virar Membro</div>
+                    <h2 class="section-title-large">Métodos Oficiais de Entrada</h2>
+                    <p style="color: var(--cream-muted); max-width: 600px; margin: 0 auto; font-size: 1.1rem;">Não existem mistérios ou processos ocultos. Para entrar na Família Sant's, você utiliza obrigatoriamente um destes dois caminhos:</p>
+                </div>
+
+                <div class="pipeline-grid">
+                    <div class="pipeline-card reveal-element">
+                        <h3>1. Ganhar um Sorteio</h3>
+                        <p>A administração realiza periodicamente sorteios oficiais dentro do servidor público abertos a todos. Se você for sorteado, ganha o cargo de membro da família de forma totalmente gratuita.</p>
+                        <a href="https://discord.gg/jMsnwERaqG" target="_blank" class="btn-outline" style="width:100%;">Entrar para Tentar a Sorte</a>
+                    </div>
+
+                    <div class="pipeline-card reveal-element" style="border-color: var(--gold-premium);">
+                        <h3>2. Comprar a Vaga</h3>
+                        <p>O método direto. Caso não queira depender dos sorteios e da sorte, você pode falar com os donos no servidor e comprar o seu ingresso imediato, tornando-se membro oficial instantaneamente.</p>
+                        <a href="https://discord.gg/jMsnwERaqG" target="_blank" class="btn-outline btn-solid" style="width:100%;">Garantir Minha Vaga VIP</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-team" id="donas">
+            <div class="container">
+                <div class="reveal-element" style="text-align: center; margin-bottom: 5rem;">
+                    <div class="section-badge" style="justify-content: center;">Comando Superior</div>
+                    <h2 class="section-title-large">Os Donos da Família</h2>
+                </div>
+
+                <div class="team-layout-grid">
+                    <div class="profile-row-card reveal-element">
+                        <div class="profile-avatar-circle">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100" height="100" rx="50" fill="#15151f"/>
+                                <path d="M30 35 L40 45 L50 30 L60 45 L70 35 L65 55 L35 55 Z" fill="#c5a059"/>
+                                <path d="M25 90 C 25 65, 75 65, 75 90 Z" fill="#731313"/>
+                                <path d="M35 55 C 35 70, 65 70, 65 55 Z" fill="#050507"/>
+                                <circle cx="43" cy="62" r="3" fill="#c5a059"/>
+                                <circle cx="57" cy="62" r="3" fill="#c5a059"/>
+                            </svg>
+                        </div>
+                        <div class="profile-details">
+                            <h3 class="profile-name">Sants</h3>
+                            <span class="profile-role">Dono Oficial</span>
+                            <p class="profile-bio">Responsável pela liderança macro, administração de recursos e tomada de decisões definitivas dentro da estrutura da Família Sant's.</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-row-card reveal-element">
+                        <div class="profile-avatar-circle">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="100" height="100" rx="50" fill="#10141d"/>
+                                <ellipse cx="50" cy="75" rx="25" ry="20" fill="#f5f4f0"/>
+                                <path d="M25 80 C 20 60, 80 60, 75 80 Z" fill="#050507"/>
+                                <polygon points="42,65 50,68 42,71" fill="#731313"/>
+                                <polygon points="58,65 50,68 58,71" fill="#731313"/>
+                                <circle cx="50" cy="68" r="2" fill="#c5a059"/>
+                                <circle cx="50" cy="48" r="16" fill="#050507"/>
+                                <polygon points="46,50 54,50 50,58" fill="#c5a059"/>
+                                <circle cx="44" cy="44" r="2" fill="#f5f4f0"/>
+                                <circle cx="56" cy="44" r="2" fill="#f5f4f0"/>
+                            </svg>
+                        </div>
+                        <div class="profile-details">
+                            <h3 class="profile-name">Pinguim</h3>
+                            <span class="profile-role">Dono Oficial</span>
+                            <p class="profile-bio">Co-proprietário e pilar central da organização. Controla os comandos diretivos, eventos e toda a ordem interna dos membros.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="developer-credit-section reveal-element" id="desenvolvedor">
+            <div class="container">
+                <div class="dev-container-block">
+                    
+                    <div class="dev-art">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="100" height="100" rx="16" fill="#0a0a0f" stroke="#c5a059" stroke-width="2"/>
+                            <path d="M25 35 L40 50 L25 65" stroke="#c5a059" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <line x1="45" y1="65" x2="75" y2="65" stroke="#f5f4f0" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+
+                    <div class="dev-text-box">
+                        <div class="section-badge">Arquiteto Web</div>
+                        <h2>Site Criado Concluído por <span>Kael</span></h2>
+                        <p>Deixo registrado de forma transparente: **eu não sou o dono ou fundador da Família**, mas sim o único programador e designer responsável por idealizar e codificar este site por completo. Absolutamente toda a programação HTML, a estilização em CSS, as animações e as estruturas digitais foram desenvolvidas e criadas do absoluto zero por mim (**Kael**).</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="timeline-section">
+            <div class="container">
+                <div class="reveal-element" style="margin-bottom: 5rem;">
+                    <div class="section-badge">Registros Históricos</div>
+                    <h2 class="section-title-large">Linha de Desenvolvimento</h2>
+                </div>
+
+                <div class="timeline-container reveal-element">
+                    <div class="timeline-item">
+                        <h4>A Fundação</h4>
+                        <p>A Família Sant's nasce sob a liderança conjunta de Sants e Pinguim, focando em montar uma base imbatível.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>A Expansão (+100)</h4>
+                        <p>Superamos a expressiva marca de mais de 100 integrantes unificados agindo dentro do ecossistema do Discord.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>A Plataforma Web</h4>
+                        <p>Kael projeta, desenvolve e publica este site exclusivo trazendo nossa marca oficialmente para a web mundial.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <div class="container">
+                <div class="reveal-element" style="text-align: center; margin-bottom: 5rem;">
+                    <div class="section-badge" style="justify-content: center;">Esclarecimentos Básicos</div>
+                    <h2 class="section-title-large">Perguntas Frequentes</h2>
+                </div>
+
+                <div class="faq-wrapper reveal-element">
+                    <div class="faq-item">
+                        <button class="faq-trigger">Qualquer um pode entrar no Discord? <span>+</span></button>
+                        <div class="faq-panel">
+                            <p>Sim! O servidor de comunidade do Discord é aberto a todo o público para interagir de forma totalmente livre e gratuita.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-trigger">Qual a diferença entre entrar no Discord e entrar na Família? <span>+</span></button>
+                        <div class="faq-panel">
+                            <p>Ao entrar no Discord você é um visitante da comunidade. Já para fazer parte e se tornar um membro real da Família Sant's, você precisa ganhar um sorteio ou realizar a compra da vaga com os donos.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-trigger">Quem comanda a organização? <span>+</span></button>
+                        <div class="faq-panel">
+                            <p>A Família Sant's pertence exclusivamente aos donos Pinguim e Sants. O site foi programado e estruturado de forma independente por Kael.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                
+                <div class="footer-brand-box">
+                    <h3>FAMÍLIA SANT'S</h3>
+                    <p>O império comandado por Sants e Pinguim. Plataforma web construída do zero em linhas de código por Kael.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Acesso</h4>
+                    <ul>
+                        <li><a href="#estrutura">Servidor Aberto</a></li>
+                        <li><a href="#ingresso">Vagas da Família</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Proprietários</h4>
+                    <ul>
+                        <li><a href="#donos">Sants</a></li>
+                        <li><a href="#donos">Pinguim</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4>Desenvolvimento</h4>
+                    <ul>
+                        <li><a href="#desenvolvedor">Kael (Criador do Site)</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Família Sant's. Todos os direitos reservados.<br><br>Todo o design de interface, engenharia de código e UX deste site foram feitos integralmente por <span>KAEL</span>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // MENU MOBILE
+            const menuTrigger = document.getElementById('mobile-menu-trigger');
+            const navigationMenu = document.getElementById('nav-menu-list');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            if(menuTrigger && navigationMenu) {
+                menuTrigger.addEventListener('click', () => {
+                    menuTrigger.classList.toggle('active');
+                    navigationMenu.classList.toggle('active');
+                });
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        menuTrigger.classList.remove('active');
+                        navigationMenu.classList.remove('active');
+                    });
+                });
+            }
+
+            // NAVBAR BLUR NO SCROLL
+            const globalNavbar = document.getElementById('global-navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 40) {
+                    globalNavbar.classList.add('scrolled');
+                } else {
+                    globalNavbar.classList.remove('scrolled');
+                }
+            });
+
+            // FAQ ACCORDION
+            const faqTriggers = document.querySelectorAll('.faq-trigger');
+            faqTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const parent = trigger.parentElement;
+                    parent.classList.toggle('active');
+                });
+            });
+
+            // REVEAL ANIMATION SUAVE AO ROLAR TELA
+            const targetElements = document.querySelectorAll('.reveal-element');
+            const appearanceCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+            const elementObserver = new IntersectionObserver(appearanceCallback, { root: null, threshold: 0.1 });
+            targetElements.forEach(el => elementObserver.observe(el));
+        });
+    </script>
+</body>
+</html>
